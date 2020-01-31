@@ -44,7 +44,7 @@ namespace OperatorReports.Controllers
             //TODO: roll in ORM like EF or Dapper for Db access
             using (var conn =
                     new SqlConnection(
-                        "Data Source=FAISALHABIB\\SQLEXPRESS;Initial Catalog=chat;User id=chat;Password=chat;") //TODO: move sensitive info like connection strings out
+                        "Data Source=PHOENIX\\SQLEXPRESS;Initial Catalog=chat;User id=chat;Password=chat;") //TODO: move sensitive info like connection strings out
             )
             {
                 conn.Open();
@@ -58,16 +58,16 @@ namespace OperatorReports.Controllers
                         {
                             var opVM = new OperatorReportViewModel
                             {
-                                ID = Convert.ToInt32(dr[1]),
-                                Name = Convert.ToString(dr[0]),
-                                ProactiveAnswered = Convert.ToInt32(dr[2]),
-                                ProactiveSent = Convert.ToInt32(dr[3]),
+                                ID = Convert.ToInt32(dr[0]),
+                                Name = Convert.ToString(dr[1]),
+                                ProactiveSent = Convert.ToInt32(dr[2]),
+                                ProactiveAnswered = Convert.ToInt32(dr[3]),
                                 ProactiveResponseRate = Convert.ToInt32(dr[4]),
-                                ReactiveAnswered = Convert.ToInt32(dr[5]),
-                                ReactiveReceived = Convert.ToInt32(dr[6]),
+                                ReactiveReceived = Convert.ToInt32(dr[5]),
+                                ReactiveAnswered = Convert.ToInt32(dr[6]),
                                 ReactiveResponseRate = Convert.ToInt32(dr[7]),
-                                AverageChatLength = Convert.ToString(dr[8]),
-                                TotalChatLength = Convert.ToString(dr[9])
+                                TotalChatLength = Convert.ToString(dr[8]),
+                                AverageChatLength = Convert.ToString(dr[9])
                             };
                            
                             productivityReport.OperatorProductivity.Add(opVM);
