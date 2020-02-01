@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BusinessEntity;
 using DataAccessLogicComponent;
 using DataAccessLogicComponent.Interfaces;
 using OperatorReports.Models;
@@ -68,7 +69,7 @@ namespace OperatorReports.Controllers
 
             ViewBag.Message = "Operator Productivity Report";
 
-            productivityReport.OperatorProductivity = _repository.GetReports().Select(r => new OperatorReportViewModel
+            productivityReport.OperatorProductivity = _repository.GetReports(new ReportFilter()).Select(r => new OperatorReportViewModel
             {
                 ID = r.Id,
                 AverageChatLength = r.AverageChatLength,

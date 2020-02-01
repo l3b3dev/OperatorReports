@@ -12,13 +12,9 @@ namespace DataAccessLogicComponent.Interfaces
         /// <summary>
         /// Gets the reports.
         /// </summary>
-        /// <param name="sw">The sw.</param>
-        /// <param name="sd">The sd.</param>
-        /// <param name="from">From.</param>
-        /// <param name="to">To.</param>
+        /// <param name="filter">The filter.</param>
         /// <returns></returns>
-        IEnumerable<OperatorReport> GetReports(string sw = null, string sd = null, DateTime? from = null,
-            DateTime? to = null);
+        IEnumerable<OperatorReport> GetReports(ReportFilter filter);
         /// <summary>
         /// Gets all websites.
         /// </summary>

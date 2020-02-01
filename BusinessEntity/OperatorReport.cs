@@ -1,5 +1,8 @@
 ﻿namespace BusinessEntity
 {
+    /// <summary>
+    /// OperatorReport
+    /// </summary>
     public class OperatorReport
     {
         public int Id { get; set; }

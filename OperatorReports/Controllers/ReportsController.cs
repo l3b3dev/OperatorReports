@@ -9,6 +9,7 @@ using System.Web.Http;
 using DataAccessLogicComponent;
 using DataAccessLogicComponent.Interfaces;
 using OperatorReports.Models;
+using Services.Interfaces;
 
 namespace OperatorReports.Controllers
 {
@@ -17,7 +18,8 @@ namespace OperatorReports.Controllers
     {
         #region Private Variables
 
-        private IReportsRepository _repository;
+        private readonly IReportsRepository _repository;
+        private readonly IFilterParamsParser _paramsParser;
 
         #endregion
 
@@ -25,31 +27,19 @@ namespace OperatorReports.Controllers
         /// Initializes a new instance of the <see cref="ReportsController"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public ReportsController(IReportsRepository repository)
+        /// <param name="paramsParser"></param>
+        public ReportsController(IReportsRepository repository, IFilterParamsParser paramsParser)
         {
             _repository = repository;
+            _paramsParser = paramsParser;
         }
 
         // GET api/values
         [Route("")]
         public IEnumerable<OperatorReportViewModel> GetReports(string sw=null, string sd=null, string from=null, string to=null, string sdate=null)
         {
-            //parse params
-            DateTime? dtFrom=null, dtTo=null;
-            if (!string.IsNullOrEmpty(from) && !string.IsNullOrEmpty(to))
-            {
-                if (DateTime.TryParse(from, out var dfrom))
-                {
-                    dtFrom = dfrom;
-                }
-                if (DateTime.TryParse(to, out var dto))
-                {
-                    dtTo = dto;
-                }
-            }
-
             //TODO: roll in ORM like EF or Dapper for Db access
-            var result = _repository.GetReports(sw,sd,dtFrom,dtTo).Select(r => new OperatorReportViewModel
+            var result = _repository.GetReports(_paramsParser.Parse(sw,sd,from,to,sdate)).Select(r => new OperatorReportViewModel
             {
                 ID = r.Id,
                 AverageChatLength = r.AverageChatLength,

@@ -271,6 +271,10 @@
       <Project>{b706580b-d89c-449c-9ca4-af4084b5782b}</Project>
       <Name>DataAccessLogicComponent</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{1481eba6-8193-4657-8ba0-96dc998ef12b}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

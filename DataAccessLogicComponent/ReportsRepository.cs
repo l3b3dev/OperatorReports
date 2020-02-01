@@ -16,8 +16,12 @@ namespace DataAccessLogicComponent
     /// <seealso cref="DataAccessLogicComponent.Interfaces.IReportsRepository" />
     public class ReportsRepository : IReportsRepository
     {
-        public IEnumerable<OperatorReport> GetReports(string sw = null, string sd = null, DateTime? from = null,
-            DateTime? to = null)
+        /// <summary>
+        /// Gets the reports.
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        /// <returns></returns>
+        public IEnumerable<OperatorReport> GetReports(ReportFilter filter)
         {
             var result = new List<OperatorReport>();
 
@@ -34,10 +38,10 @@ namespace DataAccessLogicComponent
                 {
                     sqlcomm.CommandType = CommandType.StoredProcedure;
 
-                    sqlcomm.Parameters.Add("@SelWeb", SqlDbType.VarChar).Value = sw;
-                    sqlcomm.Parameters.Add("@SelDev", SqlDbType.VarChar).Value = sd;
-                    sqlcomm.Parameters.Add("@From", SqlDbType.DateTime).Value = from;
-                    sqlcomm.Parameters.Add("@To", SqlDbType.DateTime).Value = to;
+                    sqlcomm.Parameters.Add("@SelWeb", SqlDbType.VarChar).Value = filter.SelectedWebsite;
+                    sqlcomm.Parameters.Add("@SelDev", SqlDbType.VarChar).Value = filter.SelectedDevice;
+                    sqlcomm.Parameters.Add("@From", SqlDbType.DateTime).Value = filter.SelectedFromDate;
+                    sqlcomm.Parameters.Add("@To", SqlDbType.DateTime).Value = filter.SelectedToDate;
 
                     using (var dr = sqlcomm.ExecuteReader())
                     {

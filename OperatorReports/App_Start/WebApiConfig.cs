@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using DataAccessLogicComponent;
 using DataAccessLogicComponent.Interfaces;
 using OperatorReports.DI;
+using Services;
+using Services.Interfaces;
 using Unity;
 using Unity.Lifetime;
 
@@ -18,6 +20,7 @@ namespace OperatorReports
             //hooking up our DI
             var container = new UnityContainer();
             container.RegisterType<IReportsRepository, ReportsRepository>(new HierarchicalLifetimeManager());
+            container.RegisterType<IFilterParamsParser, FilterParamsParser>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes
