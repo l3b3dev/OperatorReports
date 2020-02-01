@@ -51,7 +51,7 @@ namespace OperatorReports.Controllers
             var result = _repository.GetReports(_paramsParser.Parse(sw,sd,from,to,sdate)).Select(r => new OperatorReportViewModel
             {
                 ID = r.Id,
-                AverageChatLength = r.AverageChatLength,
+                AverageChatLength = !string.IsNullOrEmpty(r.AverageChatLength)? $"{r.AverageChatLength}m":"-",
                 Name = r.Name,
                 ProactiveAnswered = r.ProactiveAnswered,
                 ProactiveResponseRate = r.ProactiveResponseRate,

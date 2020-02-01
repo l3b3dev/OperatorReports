@@ -78,7 +78,7 @@ namespace OperatorReports.Controllers
             productivityReport.OperatorProductivity = _repository.GetReports(new ReportFilter()).Select(r => new OperatorReportViewModel
             {
                 ID = r.Id,
-                AverageChatLength = r.AverageChatLength,
+                AverageChatLength = !string.IsNullOrEmpty(r.AverageChatLength)? $"{r.AverageChatLength}m":"-",
                 Name = r.Name,
                 ProactiveAnswered = r.ProactiveAnswered,
                 ProactiveResponseRate = r.ProactiveResponseRate,
