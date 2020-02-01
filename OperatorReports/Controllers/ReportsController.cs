@@ -20,6 +20,7 @@ namespace OperatorReports.Controllers
 
         private readonly IReportsRepository _repository;
         private readonly IFilterParamsParser _paramsParser;
+        private readonly IDurationParser _durationParser;
 
         #endregion
 
@@ -28,10 +29,12 @@ namespace OperatorReports.Controllers
         /// </summary>
         /// <param name="repository">The repository.</param>
         /// <param name="paramsParser"></param>
-        public ReportsController(IReportsRepository repository, IFilterParamsParser paramsParser)
+        /// <param name="durationParser"></param>
+        public ReportsController(IReportsRepository repository, IFilterParamsParser paramsParser, IDurationParser durationParser)
         {
-            _repository = repository;
-            _paramsParser = paramsParser;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _paramsParser = paramsParser ?? throw new ArgumentNullException(nameof(paramsParser));
+            _durationParser = durationParser ?? throw new ArgumentNullException(nameof(durationParser));
         }
 
         // GET api/values
@@ -50,7 +53,7 @@ namespace OperatorReports.Controllers
                 ReactiveAnswered = r.ReactiveAnswered,
                 ReactiveReceived = r.ReactiveReceived,
                 ReactiveResponseRate = r.ReactiveResponseRate,
-                TotalChatLength = r.TotalChatLength
+                TotalChatLength = _durationParser.Parse(r.TotalChatLength)
             }).ToList();
 
             return result;
@@ -64,7 +67,10 @@ namespace OperatorReports.Controllers
         public IEnumerable<string> GetAllWebsites()
         {
             //TODO: roll in ORM like EF or Dapper for Db access
-            return _repository.GetAllWebsites().ToList();
+            var result = _repository.GetAllWebsites().ToList();
+            result.Insert(0,"ALLWEBSITES"); //per user requirements
+
+            return result;
         }
 
         /// <summary>
@@ -75,7 +81,10 @@ namespace OperatorReports.Controllers
         public IEnumerable<string> GetAllDevices()
         {
             //TODO: roll in ORM like EF or Dapper for Db access
-            return _repository.GetAllDevices().ToList();
+            var result = _repository.GetAllDevices().ToList();
+            result.Insert(0,"ALLDEVICES"); //per user requirements
+
+            return result;
         }
     }
 }

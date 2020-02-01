@@ -21,6 +21,7 @@ namespace OperatorReports
             var container = new UnityContainer();
             container.RegisterType<IReportsRepository, ReportsRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IFilterParamsParser, FilterParamsParser>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDurationParser, DurationParser>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes

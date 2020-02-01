@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DurationParser.cs" />
     <Compile Include="FilterParamsParser.cs" />
+    <Compile Include="Interfaces\IDurationParser.cs" />
     <Compile Include="Interfaces\IFilterParamsParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

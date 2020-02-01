@@ -8,6 +8,8 @@ using BusinessEntity;
 using DataAccessLogicComponent;
 using DataAccessLogicComponent.Interfaces;
 using OperatorReports.Models;
+using Services;
+using Services.Interfaces;
 
 namespace OperatorReports.Controllers
 {
@@ -16,6 +18,7 @@ namespace OperatorReports.Controllers
         #region Private Variables
 
         private IReportsRepository _repository;
+        private readonly IDurationParser _durationParser;
 
         #endregion
 
@@ -26,15 +29,18 @@ namespace OperatorReports.Controllers
         {
             //TODO: DI here as well
             _repository = new ReportsRepository();
+            _durationParser = new DurationParser();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
         /// <param name="repository">The repository.</param>
-        public HomeController(IReportsRepository repository)
+        /// <param name="durationParser"></param>
+        public HomeController(IReportsRepository repository, IDurationParser durationParser)
         {
-            _repository = repository;
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _durationParser = durationParser ?? throw new ArgumentNullException(nameof(durationParser));
         }
 
         public ActionResult Index()
@@ -80,7 +86,7 @@ namespace OperatorReports.Controllers
                 ReactiveAnswered = r.ReactiveAnswered,
                 ReactiveReceived = r.ReactiveReceived,
                 ReactiveResponseRate = r.ReactiveResponseRate,
-                TotalChatLength = r.TotalChatLength
+                TotalChatLength = _durationParser.Parse(r.TotalChatLength)
             }).ToList();
 
             return View(productivityReport);
