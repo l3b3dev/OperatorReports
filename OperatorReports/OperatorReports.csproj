@@ -271,6 +271,10 @@
       <Project>{b706580b-d89c-449c-9ca4-af4084b5782b}</Project>
       <Name>DataAccessLogicComponent</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Services.Excel\Services.Excel.csproj">
+      <Project>{4e4da4f3-5ed3-422f-bac3-d15f67af0511}</Project>
+      <Name>Services.Excel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Services\Services.csproj">
       <Project>{1481eba6-8193-4657-8ba0-96dc998ef12b}</Project>
       <Name>Services</Name>

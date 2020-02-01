@@ -7,6 +7,8 @@ using DataAccessLogicComponent;
 using DataAccessLogicComponent.Interfaces;
 using OperatorReports.DI;
 using Services;
+using Services.Excel;
+using Services.Excel.Interfaces;
 using Services.Interfaces;
 using Unity;
 using Unity.Lifetime;
@@ -22,6 +24,7 @@ namespace OperatorReports
             container.RegisterType<IReportsRepository, ReportsRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IFilterParamsParser, FilterParamsParser>(new HierarchicalLifetimeManager());
             container.RegisterType<IDurationParser, DurationParser>(new HierarchicalLifetimeManager());
+            container.RegisterType<IReportCreator, ReportCreator>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes
