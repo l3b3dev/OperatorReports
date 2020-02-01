@@ -4,12 +4,38 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataAccessLogicComponent;
+using DataAccessLogicComponent.Interfaces;
 using OperatorReports.Models;
 
 namespace OperatorReports.Controllers
 {
     public class HomeController : Controller
     {
+        #region Private Variables
+
+        private IReportsRepository _repository;
+
+        #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeController"/> class.
+        /// </summary>
+        public HomeController()
+        {
+            //TODO: DI here as well
+            _repository = new ReportsRepository();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeController"/> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        public HomeController(IReportsRepository repository)
+        {
+            _repository = repository;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -41,40 +67,20 @@ namespace OperatorReports.Controllers
             };
 
             ViewBag.Message = "Operator Productivity Report";
-            //TODO: roll in ORM like EF or Dapper for Db access
-            using (var conn =
-                    new SqlConnection(
-                        "Data Source=PHOENIX\\SQLEXPRESS;Initial Catalog=chat;User id=chat;Password=chat;") //TODO: move sensitive info like connection strings out
-            )
-            {
-                conn.Open();
 
-                using (var sqlcomm =
-                    new SqlCommand("exec dbo.OperatorProductivity ", conn))
-                {
-                    using (var dr = sqlcomm.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            var opVM = new OperatorReportViewModel
-                            {
-                                ID = Convert.ToInt32(dr[0]),
-                                Name = Convert.ToString(dr[1]),
-                                ProactiveSent = Convert.ToInt32(dr[2]),
-                                ProactiveAnswered = Convert.ToInt32(dr[3]),
-                                ProactiveResponseRate = Convert.ToInt32(dr[4]),
-                                ReactiveReceived = Convert.ToInt32(dr[5]),
-                                ReactiveAnswered = Convert.ToInt32(dr[6]),
-                                ReactiveResponseRate = Convert.ToInt32(dr[7]),
-                                TotalChatLength = Convert.ToString(dr[8]),
-                                AverageChatLength = Convert.ToString(dr[9])
-                            };
-                           
-                            productivityReport.OperatorProductivity.Add(opVM);
-                        }
-                    }
-                }
-            }
+            productivityReport.OperatorProductivity = _repository.GetReports().Select(r => new OperatorReportViewModel
+            {
+                ID = r.Id,
+                AverageChatLength = r.AverageChatLength,
+                Name = r.Name,
+                ProactiveAnswered = r.ProactiveAnswered,
+                ProactiveResponseRate = r.ProactiveResponseRate,
+                ProactiveSent = r.ProactiveSent,
+                ReactiveAnswered = r.ReactiveAnswered,
+                ReactiveReceived = r.ReactiveReceived,
+                ReactiveResponseRate = r.ReactiveResponseRate,
+                TotalChatLength = r.TotalChatLength
+            }).ToList();
 
             return View(productivityReport);
         }

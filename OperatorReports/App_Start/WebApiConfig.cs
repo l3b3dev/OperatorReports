@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Mvc;
+using DataAccessLogicComponent;
+using DataAccessLogicComponent.Interfaces;
+using OperatorReports.DI;
+using Unity;
+using Unity.Lifetime;
 
 namespace OperatorReports
 {
@@ -9,7 +15,10 @@ namespace OperatorReports
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            //hooking up our DI
+            var container = new UnityContainer();
+            container.RegisterType<IReportsRepository, ReportsRepository>(new HierarchicalLifetimeManager());
+            config.DependencyResolver = new UnityResolver(container);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
