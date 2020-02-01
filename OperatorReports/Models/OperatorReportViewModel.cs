@@ -16,8 +16,17 @@ namespace OperatorReports.Models
         public string AverageChatLength { get; set; }
     }
 
+    /// <summary>
+    /// OperatorReportItems
+    /// </summary>
     public class OperatorReportItems
     {
+        /// <summary>
+        /// Gets or sets the operator productivity.
+        /// </summary>
+        /// <value>
+        /// The operator productivity.
+        /// </value>
         public ICollection<OperatorReportViewModel> OperatorProductivity { get; set; }
     }
 }
