@@ -26,7 +26,7 @@ namespace Services
             if (!double.TryParse(duration, out var durResult))
                 return "0";
             if (durResult <= 1)
-                return $"{durResult * 60}s";
+                return $"{ Math.Round(durResult * 60,0)}s";
 
             var span = TimeSpan.FromMinutes(durResult);
             if (durResult > 1 && durResult <= 60)
