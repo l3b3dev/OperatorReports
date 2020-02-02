@@ -10,32 +10,9 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Styling", "Index", "Styling", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Home", "OperatorReport", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<body>    
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -61,6 +38,7 @@
                 var output = '';
 
                 $('.table .tbody').html('');
+                $('#loader').removeClass('hidden');
 
                 data.forEach(row => {
                     output += `<div class="tr">`;
@@ -71,6 +49,7 @@
                 });
 
                 $('.table .tbody').html(output);
+                $('#loader').addClass('hidden');
             }
 
             var saveAs = function (filename, data, type) {
@@ -136,6 +115,9 @@
             ReportsCtrl.init();
 
             $('.radio-date-type').on('change', function (e) {
+                if ($(this).val() == "custom") {
+                    $('#select-predefined-date').val('');
+                }
                 $('#predefined-dates').toggleClass('hidden');
                 $('#custom-dates').toggleClass('hidden');
             });
