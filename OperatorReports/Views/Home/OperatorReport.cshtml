@@ -1,41 +1,70 @@
 ﻿@using OperatorReports.Models
 @model OperatorReports.Models.OperatorReportItems
-
 @{
     ViewBag.Title = "Operator Report";
 }
 
 <h2>Operator Report</h2>
 
+<div class="row">
+    <div class="col-sm-12">
+        <form id="table-filters" class="form-inline">
+            <div class="form-group">
+                <label>Website:</label>
+                <select id="select-website" class="form-control" name="sw"></select>
+            </div>
+            <div class="form-group">
+                <label>Device:</label>
+                <select id="select-device" class="form-control" name="sd"></select>
+            </div>
+            <div class="form-group form-check form-check-inline">
+                <label>Date:</label>
+                <input class="radio-date-type form-check-input" type="radio" value="pre-defined" checked>
+                <label class="form-check-label">Pre-defined</label>
+                <input class="radio-date-type form-check-input" type="radio" value="custom">
+                <label class="form-check-label">Custom</label>
+            </div>
+            <div id="predefined-dates" class="form-group predefined-dates">
+                <select id="select-predefined-date" class="form-control" name="date">
+                    <option value="Today">Today</option>
+                    <option value="Yesterday">Yesterday</option>
+                    <option value="ThisWeek">This Week</option>
+                    <option value="LastWeek">Last Week</option>
+                    <option value="ThisMonth">This Month</option>
+                    <option value="LastMonth">Last Month</option>
+                    <option value="ThisYear">This Year</option>
+                    <option value="LastYear">Last Year</option>
+                </select>
+            </div>
+            <div id="custom-dates" class="form-group hidden">
+                <label>From:</label>
+                <input type="text" name="from" class="form-control date-picker">
+                <label>To:</label>
+                <input type="text" name="to" class="form-control date-picker">
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary float-left" onclick="javascript: ReportsCtrl.updateTable();">UPDATE</button>
+                <button type="button" class="btn btn-primary float-left" onclick="javascript: ReportsCtrl.exportTable();">EXPORT</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-<table>
-    <thead>
-    <tr>
-        <th>S.No.</th>
-        <th>Operator Name</th>
-        <th>Proactive Sent</th>
-        <th>Proactive Answered</th>
-        <th>Proactive Response Rate</th>
-        <th>Reactive Received</th>
-        <th>Reactive Answered</th>
-        <th>Reactive Response Rate</th>
-        <th>Total Chat Length</th>
-        <th>Average Chat Length</th>
-    </tr>
-    @foreach (var item in Model.OperatorProductivity)
-    {
-        <tr>
-            <td>@item.ID</td>
-            <td>@item.Name</td>
-            <td>@item.ProactiveSent</td>
-            <td>@item.ProactiveAnswered</td>
-            <td>@item.ProactiveResponseRate</td>
-            <td>@item.ReactiveReceived</td>
-            <td>@item.ReactiveAnswered</td>
-            <td>@item.ReactiveResponseRate</td>
-            <td>@item.TotalChatLength</td>
-            <td>@item.AverageChatLength</td>
-        </tr>
-    }
-    </thead>
-</table>
+<div class="table">
+    <div class="thead">
+        <div class="tr">
+            <div class="th">S.No.</div>
+            <div class="th">Operator Name</div>
+            <div class="th">Proactive Sent</div>
+            <div class="th">Proactive Answered</div>
+            <div class="th">Proactive Response Rate</div>
+            <div class="th">Reactive Received</div>
+            <div class="th">Reactive Answered</div>
+            <div class="th">Reactive Response Rate</div>
+            <div class="th">Total Chat Length</div>
+            <div class="th">Average Chat Length</div>
+        </div>
+    </div>
+    <div class="tbody">
+    </div>
+</div>

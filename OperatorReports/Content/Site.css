@@ -15,3 +15,54 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/* tables as divs */
+.table {
+    display: table;
+    width: 100%;
+    border: 6px solid rgba(0,0,0,.10);
+}
+
+.tbody {
+    display: table-row-group;
+}
+
+.thead {
+    display: table-header-group;
+}
+
+.tr {
+    display: table-row;
+}
+
+.tr:nth-child(even) {
+    background-color: #F2F2F2;
+}
+
+.th {
+    display: table-cell;
+    background-color: #0094FF;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 4px #111111;
+    padding: 8px 4px;
+    border-right: 1px solid #FFFFFF;
+}
+
+.td {
+    display: table-cell;
+    border-left: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    padding: 8px 4px;
+}
+
+
+#table-filters {
+    padding: 10px;
+    background-color: #F4f4f4;
+    margin-bottom: 10px;
+}
+
+#table-filters .date-picker {
+    width: 110px;
+}
