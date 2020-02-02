@@ -42,8 +42,12 @@
 
                 data.forEach(row => {
                     output += `<div class="tr">`;
-                    columns.forEach(column => {
-                        output += `<div class="td">${row[column]}</div>`;
+                    columns.forEach((column,index) => {
+                        if (index == 4 || index == 7) {
+                            output += `<div class="td">${row[column] == 0?'-':row[column]+'%'}</div>`;
+                        } else {
+                            output += `<div class="td">${row[column] == 0?'-':row[column]}</div>`;
+                        }
                     });
                     output += `</div>`;
                 });

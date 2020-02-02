@@ -356,7 +356,7 @@ namespace Services.Excel
             workRow.Append(CreateCell("Reactive Answered", 2U));
             workRow.Append(CreateCell("Reactive Response Rate", 2U));
             workRow.Append(CreateCell("Total Chat Length", 2U));
-            workRow.Append(CreateCell("Average Chant Length", 2U));
+            workRow.Append(CreateCell("Average Chat Length", 2U));
             return workRow;
         }
 

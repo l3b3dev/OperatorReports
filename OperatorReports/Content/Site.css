@@ -47,6 +47,7 @@ textarea {
     text-shadow: 1px 1px 4px #111111;
     padding: 8px 4px;
     border-right: 1px solid #FFFFFF;
+    text-align: center;
 }
 
 .td {
@@ -54,6 +55,7 @@ textarea {
     border-left: 1px solid #DDDDDD;
     border-bottom: 1px solid #DDDDDD;
     padding: 8px 4px;
+    text-align: center;
 }
 
 

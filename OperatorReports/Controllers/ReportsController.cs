@@ -52,7 +52,7 @@ namespace OperatorReports.Controllers
             var result = _repository.GetReports(_paramsParser.Parse(sw,sd,from,to,sdate)).Select(r => new OperatorReportViewModel
             {
                 ID = r.Id,
-                AverageChatLength = !string.IsNullOrEmpty(r.AverageChatLength)? $"{r.AverageChatLength}m":"-",
+                AverageChatLength = !string.IsNullOrEmpty(r.AverageChatLength)? $"{r.AverageChatLength}m":"0",
                 Name = r.Name,
                 ProactiveAnswered = r.ProactiveAnswered,
                 ProactiveResponseRate = r.ProactiveResponseRate,
@@ -74,7 +74,7 @@ namespace OperatorReports.Controllers
             var data = _repository.GetReports(_paramsParser.Parse(sw, sd, from, to, sdate)).Select(r=> new OperatorReport
             {
                 Id = r.Id,
-                AverageChatLength = !string.IsNullOrEmpty(r.AverageChatLength)? $"{r.AverageChatLength}m":"-",
+                AverageChatLength = !string.IsNullOrEmpty(r.AverageChatLength)? $"{r.AverageChatLength}m":"0",
                 Name = r.Name,
                 ProactiveAnswered = r.ProactiveAnswered,
                 ProactiveResponseRate = r.ProactiveResponseRate,
