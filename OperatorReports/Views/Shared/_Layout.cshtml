@@ -52,9 +52,16 @@
                 $('#loader').addClass('hidden');
             }
 
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+
             var saveAs = function (filename, data, type) {
                 var a = $('<a style="display: none;" />');
-                var url = window.URL.createObjectURL(new Blob([data], { type: type }));
+                var url = window.URL.createObjectURL(new Blob([s2ab(atob(data))], { type: type }));
                 a.attr('href', url).attr('download', filename);
                 $('body').append(a);
                 a[0].click();
@@ -100,7 +107,7 @@
 
             var exportTable = function () {
                 $.get(`${baseEndPoint}/reports/excel`, data => {
-                    saveAs('Export.xls', data, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                    saveAs('Operator Productivity Report.xlsx', data, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 });
             }
 

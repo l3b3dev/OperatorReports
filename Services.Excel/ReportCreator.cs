@@ -53,6 +53,30 @@ namespace Services.Excel
             }
         }
 
+        /// <summary>
+        /// Generates the specified payload as byte array
+        /// </summary>
+        /// <param name="payload">The payload.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">payload</exception>
+        public string Generate(IEnumerable<OperatorReport> payload)
+        {
+            if (payload == null) throw new ArgumentNullException(nameof(payload));
+            byte[] result;
+
+            using (var stream = new MemoryStream())
+            {
+                using (var package = SpreadsheetDocument.Create(stream, SpreadsheetDocumentType.Workbook))
+                {
+                    CreatePartsForExcel(package, payload);
+                }
+
+                result = stream.ToArray();
+            }
+
+            return Convert.ToBase64String(result);
+        }
+
         #region Private Methods
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using BusinessEntity;
 
@@ -24,5 +25,12 @@ namespace Services.Excel.Interfaces
         /// <param name="stream"></param>
         /// <returns></returns>
         void Generate(IEnumerable<OperatorReport> payload, MemoryStream stream);
+
+        /// <summary>
+        /// Generates the specified payload.
+        /// </summary>
+        /// <param name="payload">The payload.</param>
+        /// <returns></returns>
+        string Generate(IEnumerable<OperatorReport> payload);
     }
 }

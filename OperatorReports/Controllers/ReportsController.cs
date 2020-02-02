@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Web.Http;
+using BusinessEntity;
 using DataAccessLogicComponent;
 using DataAccessLogicComponent.Interfaces;
 using OperatorReports.Models;
@@ -66,23 +67,28 @@ namespace OperatorReports.Controllers
         }
 
         [Route("excel")]
-        public HttpResponseMessage GetExcelReport(string sw = null, string sd = null, string from = null,
+        public IHttpActionResult GetExcelReport(string sw = null, string sd = null, string from = null,
             string to = null, string sdate = null)
         {
             //TODO: roll in ORM like EF or Dapper for Db access
-            var data = _repository.GetReports(_paramsParser.Parse(sw, sd, from, to, sdate));
+            var data = _repository.GetReports(_paramsParser.Parse(sw, sd, from, to, sdate)).Select(r=> new OperatorReport
+            {
+                Id = r.Id,
+                AverageChatLength = !string.IsNullOrEmpty(r.AverageChatLength)? $"{r.AverageChatLength}m":"-",
+                Name = r.Name,
+                ProactiveAnswered = r.ProactiveAnswered,
+                ProactiveResponseRate = r.ProactiveResponseRate,
+                ProactiveSent = r.ProactiveSent,
+                ReactiveAnswered = r.ReactiveAnswered,
+                ReactiveReceived = r.ReactiveReceived,
+                ReactiveResponseRate = r.ReactiveResponseRate,
+                TotalChatLength = _durationParser.Parse(r.TotalChatLength)
+            });
+            
 
-            var stream = new MemoryStream();
-            _creator.Generate(data, stream);
-            stream.Position = 0;
+            var bytes = _creator.Generate(data);
 
-            var httpResponseMessage = Request.CreateResponse(HttpStatusCode.OK);
-            httpResponseMessage.Content = new StreamContent(stream);
-            httpResponseMessage.Content.Headers.ContentDisposition =
-                new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") {FileName = "Operator Productivity Report.xlsx"};
-            httpResponseMessage.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-
-            return httpResponseMessage;
+            return Ok(bytes);
         }
 
         /// <summary>
