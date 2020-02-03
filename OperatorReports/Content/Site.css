@@ -42,7 +42,7 @@ textarea {
 
 .th {
     display: table-cell;
-    background-color: #5fa73c;
+    background-color: #1bb9da;
     color: #FFFFFF;
     text-shadow: 1px 1px 4px #111111;
     padding: 8px 4px;
@@ -58,6 +58,20 @@ textarea {
     text-align: center;
 }
 
+.btn-primary {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 1px;
+    border-radius: 40px;
+    border: 1px solid #1bb9da;
+    color: #1bb9da;
+    background: none;
+}
+
+.btn-primary:hover {
+    background: #39c7e4;
+}
 
 #table-filters {
     padding: 10px;
