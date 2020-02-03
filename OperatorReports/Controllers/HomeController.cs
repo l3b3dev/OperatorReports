@@ -48,20 +48,6 @@ namespace OperatorReports.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         /// <summary>
         /// Reports logic
         /// </summary>
@@ -78,7 +64,7 @@ namespace OperatorReports.Controllers
             productivityReport.OperatorProductivity = _repository.GetReports(new ReportFilter()).Select(r => new OperatorReportViewModel
             {
                 ID = r.Id,
-                AverageChatLength = !string.IsNullOrEmpty(r.AverageChatLength)? $"{r.AverageChatLength}m":"-",
+                AverageChatLength = !string.IsNullOrEmpty(r.AverageChatLength) ? $"{r.AverageChatLength}m" : "-",
                 Name = r.Name,
                 ProactiveAnswered = r.ProactiveAnswered,
                 ProactiveResponseRate = r.ProactiveResponseRate,
@@ -90,11 +76,6 @@ namespace OperatorReports.Controllers
             }).ToList();
 
             return View(productivityReport);
-        }
-
-        public ActionResult OperatorProductivityData()
-        {
-            return View();
         }
     }
 }
